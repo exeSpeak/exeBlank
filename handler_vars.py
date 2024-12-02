@@ -5,10 +5,11 @@ vars_group_app = ["savegameloc"]
 vars_group_01 = ["01_first", "01_last"]
 vars_group_02 = ["02_first", "02_last"]
 vars_group_currency = ["gold", "ore"]
+vars_group_flags = ["isGameRunning", "isDialogVisible"]
 
 def combine_groups ():
     global vars_names
-    vars_names = vars_group_app + vars_group_01 + vars_group_02 + vars_group_currency
+    vars_names = vars_group_app + vars_group_01 + vars_group_02 + vars_group_currency + vars_group_flags
 
 def setup_ints ():
     combine_groups()
@@ -44,17 +45,35 @@ def vars_addMe (input_which, input_additive):
         return
     vars_ints[temp] += input_additive
 
+def vars_getMe (input_which):
+    temp = returnVarNameIndex(input_which)
+    if temp == -1:
+        return -1
+    return vars_ints[temp]
+
+def vars_getFlag (input_which):
+    temp = returnVarNameIndex(input_which)
+	match vars_ints[temp]:
+		case 1:
+			return True
+		case _:
+			return False
+
 def vars_setMe (input_which, input_newValue):
     temp = returnVarNameIndex(input_which)
     if temp == -1:
         return
     vars_ints[temp] = input_newValue
 
-def vars_getMe (input_which):
+def vars_setFlag (input_which, input_bool: bool):
     temp = returnVarNameIndex(input_which)
-    if temp == -1:
-        return -1
-    return vars_ints[temp]
+    match input_bool:
+	    case True:
+		    vars_ints[temp] = 1
+	    case False:
+		    vars_ints[temp] = 0
+        case _:
+            print("Attempt to set flag with " + input_bool + " failed. Possible string instead of bool.")
 
 def saveAllVars():
     import os

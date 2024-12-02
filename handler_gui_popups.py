@@ -59,10 +59,9 @@ class Popups:
         for element in self.elements:
             screen.blit(element.image, (element.x, element.y))
 
-class popup_alert(Popups):
+class popup_alert (Popups):
     # NOTE: THE ALERT POPUP AUTOMATICALLY SHOWS ITSELF WHEN IT GETS SENT A MESSAGE
     def __init__(self, title, message):
-        # Create a smaller popup for dialogs
         super().__init__ (width_percent=40, height_percent=30)
         self.background.fill((0,0,0))
         self.element_add(handler_gui_elements.element_box_text(
@@ -81,4 +80,44 @@ class popup_alert(Popups):
             self.draw(screen)
             pygame.display.flip()
 
-        
+class popup_gameover (Popups):
+    # NOTE: NOTIFY THE USER THAT THE GAME IS OVER
+    def __init__(self, title, reason):
+        super().__init__ (width_percent=40, height_percent=30)
+        self.background.fill((0,0,0))
+        self.element_add(handler_gui_elements.element_box_text(
+            "Game Over",
+            (self.x + 10, self.y + 10),
+            (self.width - 20, self.height - 20)
+        ))
+        self.element_add(handler_gui_elements.element_box_text(
+            reason,
+            (self.x + 10, self.y + 40),
+            (self.width - 35, self.height - 60)
+        ))
+        self.element_add (handler_gui_elements.element_button_text(
+            "OKAY",
+            (self.x + 10, self.y + self.height - 40),
+            (self.width - 20, 30)
+        ))
+
+class popup_prompt (Popups):
+    # NOTE: ASK THE USER A QUESTION AND THEN RECEIVE A "YES" OR "NO" RESPONSE
+    def __init__(self, title, inquiry):
+        super().__init__ (width_percent=40, height_percent=30)
+        self.background.fill((0,0,0))
+        self.element_add(handler_gui_elements.element_box_text(
+            inquiry,
+            (self.x + 10, self.y + 10),
+            (self.width - 35, self.height - 20)
+        ))
+        self.element_add (handler_gui_elements.element_button_text(
+            "YES",
+            (self.x + 10, self.y + self.height - 40),
+            (self.width - 20, 30)
+        ))
+        self.element_add (handler_gui_elements.element_button_text(
+            "NO",
+            (self.x + 60, self.y + self.height - 40),
+            (self.width - 20, 30)
+        ))

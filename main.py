@@ -6,6 +6,11 @@ from handler_observer import EventSubject, GameObserver, ObserverPriority
 import handler_gui_sizing
 import pygame
 
+# TODO LIST: SPRITE HANDLER
+# TODO LIST: SAVE/LOAD USING STORED SAVE-GAME ID NUMBER
+# TODO LIST: OPTIONS MENU
+# TODO LIST: GAME OVER POPUP
+
 class GameController(GameObserver):
     """Main game controller that handles core game events"""
     def __init__(self, event_subject):
