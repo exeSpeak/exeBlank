@@ -12,6 +12,7 @@ def combine_groups ():
     vars_names = vars_group_app + vars_group_01 + vars_group_02 + vars_group_currency + vars_group_flags
 
 def setup_ints ():
+    global vars_ints
     combine_groups()
     vars_ints = [0] * len(vars_names)
 
@@ -52,12 +53,10 @@ def vars_getMe (input_which):
     return vars_ints[temp]
 
 def vars_getFlag (input_which):
-    temp = returnVarNameIndex(input_which)
-	match vars_ints[temp]:
-		case 1:
-			return True
-		case _:
-			return False
+    tempIndex = returnVarNameIndex(input_which)
+    if vars_ints[tempIndex] == 1:
+        return True
+    return False
 
 def vars_setMe (input_which, input_newValue):
     temp = returnVarNameIndex(input_which)
@@ -66,14 +65,14 @@ def vars_setMe (input_which, input_newValue):
     vars_ints[temp] = input_newValue
 
 def vars_setFlag (input_which, input_bool: bool):
-    temp = returnVarNameIndex(input_which)
+    tempIndex = returnVarNameIndex(input_which)
     match input_bool:
-	    case True:
-		    vars_ints[temp] = 1
-	    case False:
-		    vars_ints[temp] = 0
+        case True:
+            vars_ints[tempIndex] = 1
+        case False:
+            vars_ints[tempIndex] = 0
         case _:
-            print("Attempt to set flag with " + input_bool + " failed. Possible string instead of bool.")
+            print("Attempt to set flag with " + str(input_bool) + " failed. Possible string instead of bool.")
 
 def saveAllVars():
     import os
