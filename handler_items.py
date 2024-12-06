@@ -1,4 +1,5 @@
 import handler_vars
+import random
 
 list_premadeItems = list()
 
@@ -43,11 +44,36 @@ def generatePremadeItemList (input_numberOfItemsToBuild):
 	for x in range(input_numberOfItemsToBuild):
 		list_premadeItems.append(returnNewItem(temp_currentLevel))
 
-def convertItemStringToArray (input_itemString):
-	pass
+def returnItemCodeFromInt (input_itemInt):
+    if not (0 <= input_itemInt <= 675):  # 26*26 - 1 = 675 (AA to ZZ)
+        return None
+    
+    first_letter = chr(ord('A') + (input_itemInt // 26))
+    second_letter = chr(ord('A') + (input_itemInt % 26))
+    return first_letter + second_letter
 
-def convertArrayToItemString (input_itemType, input_buffArray):
-	pass
+def returnIntFromItemCode (input_itemCode):
+	first_letter = ord(input_itemCode[0]) - ord('A')
+	second_letter = ord(input_itemCode[1]) - ord('A')
+	return (first_letter * 26) + second_letter
+
+def returnItemStringFromIntList (input_intList):
+    result = ""
+    for num in input_intList:
+        code = returnItemCodeFromInt(num)
+        if code:  # Only add the code if it's valid
+            result += code
+    return result
+
+def returnIntArrayFromItemString (input_itemString):
+    result = []
+    # Process string in pairs of 2 characters
+    for i in range(0, len(input_itemString), 2):
+        if i + 1 < len(input_itemString):  # Ensure we have 2 characters
+            code = input_itemString[i:i+2]
+            num = returnIntFromItemCode(code)
+            result.append(num)
+    return result
 
 def returnNewItem (input_level):
 	temp_whichItemType = returnRandomItemType()
@@ -60,7 +86,7 @@ def returnNewItem (input_level):
 		temp_buffs[temp_indexOfBuffToIncrease] += temptemp_pointsToDistribute
 		temp_indexOfBuffToIncrease += 1
 		if temp_indexOfBuffToIncrease > 5: temp_buffToIncrease = 0
-	temp_outputString = convertToItemString(temp_whichItemType, temp_buffs)
+	temp_outputString = returnItemStringFromIntList(temp_buffs)
 	return temp_outputString
 
 def returnRandomItemType ():
