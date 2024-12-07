@@ -1,0 +1,37 @@
+{
+    "1": {
+        "speaker": "Captain Sarah",
+        "d": "Dialog 1",
+        "sprite_bkg": "bridge_alert",
+        "sprite_left": "sarah_concerned",
+        "sprite_right": "commander_neutral"
+    },
+    "2": {
+        "speaker": "Commander",
+        "d": "Dialog 2",
+        "sprite_bkg": "bridge_alert",
+        "sprite_left": "sarah_concerned",
+        "sprite_right": "commander_serious"
+    },
+    "3": {
+        "speaker": "Captain Sarah",
+        "d": "Dialog 3",
+        "sprite_bkg": "bridge_alert_red",
+        "sprite_left": "sarah_worried",
+        "sprite_right": "commander_serious"
+    },
+    "4": {
+        "speaker": "Commander",
+        "d": "Dialog 4",
+        "sprite_bkg": "bridge_alert_red",
+        "sprite_left": "sarah_salute",
+        "sprite_right": "commander_determined"
+    },
+    "5": {
+        "speaker": "Captain Sarah",
+        "d": "Dialog 5",
+        "sprite_bkg": "bridge_alert_red",
+        "sprite_left": "sarah_determined",
+        "sprite_right": "commander_determined"
+    }
+}

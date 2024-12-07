@@ -3,7 +3,7 @@ import random
 
 list_premadeItems = list()
 
-itemNames_type = (
+itemNames_all_byType = (
 	"currency",
 	"ore",
 	"weapon",
@@ -88,6 +88,32 @@ def returnNewItem (input_level):
 		if temp_indexOfBuffToIncrease > 5: temp_buffToIncrease = 0
 	temp_outputString = returnItemStringFromIntList(temp_buffs)
 	return temp_outputString
+
+def returnBlendedItem (input_item1, input_item2):
+    # Ensure both strings have even length by padding with 'A' if needed
+    if len(input_item1) % 2 != 0:
+        input_item1 += 'A'
+    if len(input_item2) % 2 != 0:
+        input_item2 += 'A'
+    max_pairs = max(len(input_item1) // 2, len(input_item2) // 2)
+    input_item1 = input_item1.ljust(max_pairs * 2, 'A')
+    input_item2 = input_item2.ljust(max_pairs * 2, 'A')
+    
+    # Split strings into pairs of characters
+    pairs1 = [input_item1[i:i+2] for i in range(0, len(input_item1), 2)]
+    pairs2 = [input_item2[i:i+2] for i in range(0, len(input_item2), 2)]
+    
+    # Create new blended item string
+    blended_pairs = []
+    for i in range(len(pairs1)):
+        # For each position, randomly choose between item1 and item2's code
+        if random.random() < 0.5:
+            blended_pairs.append(pairs1[i])
+        else:
+            blended_pairs.append(pairs2[i])
+    
+    # Join all pairs back into a single string
+    return ''.join(blended_pairs)
 
 def returnRandomItemType ():
 	tempRandom = 100

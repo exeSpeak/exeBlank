@@ -109,7 +109,11 @@ class Panels:
 class panel_sidebar_left(Panel):
     def __init__(self):
         super().__init__(200, "left")  # 200px wide, full height, left margin
-        
+
+class panel_sidebar_right(Panel):
+    def __init__(self):
+        super().__init__(200, "right")  # 200px wide, full height, right margin
+
 class panel_toolbar_top(Panel):
     def __init__(self):
         super().__init__(50, "top")  # Full width, 50px height, top margin
