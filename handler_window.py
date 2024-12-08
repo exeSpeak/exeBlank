@@ -45,9 +45,17 @@ class WindowHandler:
             return event
 
     def resize(self, width, height):
+        """Handle window resize event"""
         self.window_width = width
         self.window_height = height
         self.window = pygame.display.set_mode((self.window_width, self.window_height), pygame.RESIZABLE)
+        
+        # Update GUI sizing cache with new dimensions
+        from handler_gui_sizing import get_sizing
+        sizing = get_sizing()
+        sizing.update_cache()
+        
+        # Update display
         self.update_display()
 
         self.display_width = width

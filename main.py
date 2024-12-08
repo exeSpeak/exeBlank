@@ -29,7 +29,11 @@ def start():
     
     # Initialize core handlers
     window_handler = WindowHandler("My Game Window")
+    
+    # Initialize GUI sizing system and force initial cache update
     handler_gui_sizing.init_sizing(window_handler)
+    sizing = handler_gui_sizing.get_sizing()
+    sizing.update_cache()  # Force initial calculation of all relative values
     
     # Initialize event system for input from keyboard, joystick, and mouse
     event_manager = EventManager()
