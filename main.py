@@ -31,12 +31,10 @@ def start():
     window_handler = WindowHandler("My Game Window")
     handler_gui_sizing.init_sizing(window_handler)
     
-    # Initialize event system
+    # Initialize event system for input from keyboard, joystick, and mouse
     event_manager = EventManager()
     event_subject = EventSubject()
     game_controller = GameController(event_subject)
-    
-    # Set up default input mappings
     create_default_mappings()
     
     # Initialize game state
@@ -73,7 +71,7 @@ def update():
         window_handler.clear_screen((0, 0, 0))  # Clear screen with black color
         window_handler.update_display()
         
-        # Maintain consistent frame rate
+        # Maintain consistent frame rate of 60 FPS
         clock.tick(60)
 
 def coroutine_1sec():

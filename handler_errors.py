@@ -1,12 +1,15 @@
 import handler_game
 
-def checkForError (inputType = ""):
+def checkForError (inputType = "", inputSpecific = ""):
+	temp_errorExplanation = "Requested error type", inputType, " given to checkForError does not exist"
 	match inputType:
 		case "InvalidInputType":
-			print("Error 0: Invalid input type")
+			temp_errorExplanation = "Invalid input type"
 		case "InvalidInputValue":
-			print("Error 1: Invalid input value")
+			temp_errorExplanation = "Invalid input value"
 		case "InvalidInputSequence":
-			print("Error 2: Invalid input sequence")
-		case _:
-			print("Requested error type given to checkForError does not exist")
+			temp_errorExplanation = "Invalid input sequence"
+	
+	# TWO TYPES OF FEEDBACK IN CASE DEVELOPER IS USING A TERMINAL
+	handler_game.alertUser (temp_errorExplanation)
+	print(temp_errorExplanation)

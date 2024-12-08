@@ -71,7 +71,7 @@ class AudioHandler:
         max_pitch = base_pitch * (1.0 + variation)
         return random.uniform(min_pitch, max_pitch)
 
-    def play_sound(self, name, loops=0, randomize_pitch=False, pitch_variation=0.1):
+    def play_sound(self, name, loops=0, randomize_pitch=True, pitch_variation=0.1):
         """
         Play a sound effect with optional pitch randomization
         :param name: Name of the sound to play

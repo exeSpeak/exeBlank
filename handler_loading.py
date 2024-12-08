@@ -6,6 +6,9 @@ from enum import Enum, auto
 from handler_gui_sizing import get_sizing
 from handler_animation_2d import get_animation_manager
 
+# NOTE: THIS FILE CONTROLS THE FUNCTIONALITY OF layer_loading INSIDE OF hanlder_gui_layers
+# NOTE: THIS FILE DOES NOT CONTROL THE ACTUAL LOADING OF SAVE GAME FILES, WHICH CAN BE FOUND WITHIN handler_vars.py
+
 class LoadingState(Enum):
     INACTIVE = auto()
     FADE_IN = auto()
