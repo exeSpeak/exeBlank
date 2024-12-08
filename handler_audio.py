@@ -1,5 +1,6 @@
 import os
 import pygame
+import random
 
 class AudioHandler:
     def __init__(self):
@@ -59,14 +60,40 @@ class AudioHandler:
         else:
             print(f"Music file not found: {music_path}")
     
-    def play_sound(self, name, loops=0):
+    def _get_random_pitch(self, base_pitch: float = 1.0, variation: float = 0.1) -> float:
         """
-        Play a sound effect
+        Generate a random pitch value within the variation range
+        :param base_pitch: The base pitch (default 1.0)
+        :param variation: Maximum pitch variation (default 0.1 = ±10%)
+        :return: Random pitch value
+        """
+        min_pitch = base_pitch * (1.0 - variation)
+        max_pitch = base_pitch * (1.0 + variation)
+        return random.uniform(min_pitch, max_pitch)
+
+    def play_sound(self, name, loops=0, randomize_pitch=False, pitch_variation=0.1):
+        """
+        Play a sound effect with optional pitch randomization
         :param name: Name of the sound to play
         :param loops: Number of times to loop (-1 for infinite)
+        :param randomize_pitch: If True, apply random pitch variation
+        :param pitch_variation: Maximum pitch variation (0.1 = ±10%)
         """
         if name in self.sounds:
-            self.sounds[name].play(loops)
+            if randomize_pitch:
+                # Get a copy of the sound for pitch modification
+                sound_copy = self.sounds[name].get_raw()
+                # Create a new Sound object from the raw data
+                pitched_sound = pygame.mixer.Sound(buffer=sound_copy)
+                # Set the pitch by adjusting the playback frequency
+                base_frequency = 44100  # Standard frequency
+                new_frequency = int(base_frequency * self._get_random_pitch(1.0, pitch_variation))
+                pitched_sound.set_volume(self.sound_volume)
+                channel = pitched_sound.play(loops)
+                if channel:
+                    channel.set_rate(new_frequency)
+            else:
+                self.sounds[name].play(loops)
         else:
             print(f"Sound not found: {name}")
     
@@ -142,9 +169,9 @@ class AudioHandler:
 audio_handler = AudioHandler()
 
 # Global access functions
-def play_sound(name, loops=0):
-    """Play a sound effect"""
-    audio_handler.play_sound(name, loops)
+def play_sound(name, loops=0, randomize_pitch=False, pitch_variation=0.1):
+    """Play a sound effect with optional pitch randomization"""
+    audio_handler.play_sound(name, loops, randomize_pitch, pitch_variation)
 
 def play_music(name, loops=-1, fade_ms=0):
     """Play a music track"""
