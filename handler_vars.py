@@ -90,3 +90,4 @@ def loadAllVars():
             save_string = f.read()
             if save_string:
                 vars_ints = [int(x) for x in save_string.split('|*|')]
+
