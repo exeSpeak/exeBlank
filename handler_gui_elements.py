@@ -147,9 +147,23 @@ class element_box_color (UIElement):
     def __init__(self, color, position, size):
         self.color = color
         self.size = size
-        self.image = pygame.Surface(size)
-        self.image.fill(color)
+        self.image = pygame.Surface(size, pygame.SRCALPHA)  # Enable alpha channel
+        self.alpha = 100  # Default to fully visible
+        self._update_surface()
         super().__init__(self.image, position[0], position[1])
+    
+    def _update_surface(self):
+        """Internal method to update the surface with current color and alpha"""
+        self.image.fill((self.color[0], self.color[1], self.color[2], int(self.alpha * 2.55)))
+    
+    def set_alpha(self, alpha_percent: int):
+        """Set the alpha value (0-100 where 0 is invisible and 100 is fully visible)"""
+        self.alpha = max(0, min(100, alpha_percent))  # Clamp between 0 and 100
+        self._update_surface()
+    
+    def get_alpha(self) -> int:
+        """Get the current alpha value (0-100)"""
+        return self.alpha
 
 class element_box_text (UIElement):
     def __init__(self, text, position, size, font_size=24, text_color=(0, 0, 0), bg_color=(255, 255, 255)):

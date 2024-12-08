@@ -6,13 +6,8 @@ from handler_observer import EventSubject, GameObserver, ObserverPriority
 import handler_gui_sizing
 import pygame
 
-# TODO LIST: SPRITE HANDLER
-# TODO LIST: SAVE/LOAD USING STORED SAVE-GAME ID NUMBER
-# TODO LIST: OPTIONS MENU
-# TODO LIST: GAME OVER POPUP
-
 class GameController(GameObserver):
-    """Main game controller that handles core game events"""
+    """Main game controller that handles core application events"""
     def __init__(self, event_subject):
         super().__init__()
         self.observe(
@@ -46,7 +41,7 @@ def start():
     
     # Initialize game state
     running = True
-    handler_vars.clear()
+    handler_vars.clear() # this is different than the "clear" we do at the start of a new game
 
     # Initialize coroutine
     timer_coroutine = coroutine_1sec()
@@ -72,7 +67,7 @@ def update():
                 event_subject.notify(event)
         
         # Get time from coroutine
-        current_time - next(timer_coroutine)
+        current_time = next(timer_coroutine)
         
         # Update display
         window_handler.clear_screen((0, 0, 0))  # Clear screen with black color
@@ -93,6 +88,7 @@ def create_menubar():
         ("New", lambda: event_subject.notify(InputEvent(
             InputSource.KEYBOARD, "menu", {"action": "new_game"}
         ))),
+        ("Exit", lambda: exit())
     ])
 
 def create_default_mappings():
