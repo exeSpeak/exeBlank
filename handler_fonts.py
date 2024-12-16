@@ -4,9 +4,10 @@ import pygame
 class FontHandler:
     # CHANGE THESE AS NECESSARY AND THE CODE WILL AUTOMATICALLY LOAD
     font_file_locations = [
-        'defaults/default_font_tnr.ttf',
-        'defaults/default_font_arial.ttf', 
-        'defaults/default_font_verdana.ttf'
+        'default/verdana.ttf',
+        'default/verdana_bold.ttf', 
+        'default/verdana_italic.ttf',
+        'default/verdana_bold_italic.ttf'
         ]
 
     def __init__(self):

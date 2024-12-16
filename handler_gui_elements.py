@@ -22,7 +22,6 @@ class UIElement:
     def update_position(self, new_x, new_y):
         self.x = new_x
         self.y = new_y
-        self.rect.topleft = (new_x, new_y)
 
 class element_button_text (UIElement):
     def __init__(self, text, position, size):
@@ -102,8 +101,10 @@ class element_button_image (UIElement):
         return self.rect.collidepoint(pos)
 
 class element_bar_status (UIElement):
-    def __init__(self, x, y, width, height, max_value=100, color=(0, 255, 0), background_color=(255, 0, 0)):
-        self.rect = pygame.Rect(x, y, width, height)
+    def __init__(self, input_x, input_y, width, height, max_value=100, color=(0, 255, 0), background_color=(255, 0, 0)):
+        self.rect = pygame.Rect(input_x, input_y, width, height)
+        self.x = input_x
+        self.y = input_y
         self.max_value = max_value
         self.color = color
         self.background_color = background_color
@@ -115,9 +116,6 @@ class element_bar_status (UIElement):
         fill_rect = pygame.Rect(self.rect.left, self.rect.top, fill_width, self.rect.height)
         pygame.draw.rect(surface, self.color, fill_rect)
         pygame.draw.rect(surface, (0, 0, 0), self.rect, 2)
-
-    def update_position(self, x, y):
-        self.rect.topleft = (x, y)
 
 class element_image (UIElement):
     def __init__(self, image_path, position, size):
@@ -131,7 +129,8 @@ class element_image (UIElement):
 class element_text_title (UIElement):
     def __init__(self, text, position):
         self.text = text
-        self.position = position
+        self.x = position[0]
+        self.y = position[1]
         self.color = (255, 255, 0)  # Yellow color
         self.font_size = 24
 
@@ -213,9 +212,6 @@ class element_slider (UIElement):
         text_surface = pygame.font.Font(None, 20).render(str(self.value), True, (0, 0, 0))
         surface.blit(text_surface, (self.rect.left + self.rect.width // 2 - text_surface.get_width() // 2, self.rect.top - text_surface.get_height() // 2))
 
-    def update_position(self, x, y):
-        self.rect.topleft = (x, y)
-
     def update_value(self, value):
         self.value = value
 
@@ -246,18 +242,15 @@ class element_viewport (UIElement):
         self.scroll_x = 0
         self.scroll_y = 0
 
-    def update_position(self, x, y):
-        self.rect.topleft = (x, y)
-
-    def update_scroll(self, scroll_x, scroll_y):
-        self.scroll_x = scroll_x
-        self.scroll_y = scroll_y
-
     def get_scroll(self):
         return self.scroll_x, self.scroll_y
 
     def get_rect(self):
         return self.rect
+
+    def update_scroll(self, scroll_x, scroll_y):
+        self.scroll_x = scroll_x
+        self.scroll_y = scroll_y
 
     def draw(self, surface):
         pygame.draw.rect(surface, (0, 0, 0), self.rect, 2)
@@ -407,12 +400,3 @@ class element_menu_bar(UIElement):
             # Close dropdown if clicked outside
             self.active_menu = None
         return False
-
-    def update_position(self, x, y):
-        self.rect.topleft = (x, y)
-        # Update positions of menu items
-        current_x = x
-        for menu in self.menu_items.values():
-            menu['rect'].x = current_x
-            menu['dropdown_rect'].x = current_x
-            current_x += menu['rect'].width

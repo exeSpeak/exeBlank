@@ -12,11 +12,11 @@ class Layers:
         self.background = pygame.Surface((self.window_width, self.window_height))
         self.background.fill((204,204,204))
 
-    def element_add (self, element):
-        self.elements.append(element)
+    def element_add (self, UIElement):
+        self.elements.append(UIElement)
 
-    def element_remove (self, element):
-        self.elements.append(element)
+    def element_remove (self, UIElement):
+        self.elements.remove(UIElement)
 
     def hide (self):
         for element in self.elements:
@@ -34,11 +34,13 @@ class Layers:
 class layer_game (Layers):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
 
 # LAYERS: MAIN MENU
 class layer_main_menu_root (Layers):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         
         from handler_gui_sizing import get_sizing
         sizing = get_sizing()
@@ -71,6 +73,7 @@ class layer_main_menu_root (Layers):
 class layer_fades (Layers):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         
         from handler_gui_sizing import get_sizing
         sizing = get_sizing()
@@ -79,7 +82,7 @@ class layer_fades (Layers):
         self.fade_overlay = handler_gui_elements.element_box_color(
             (0, 0, 0),  # Black color
             (0, 0),     # Top-left position
-            (sizing.window_width, sizing.window_height)  # Full screen size
+            (sizing.cached_width, sizing.cached_height)  # Full screen size
         )
         self.fade_overlay.set_alpha(0)  # Start fully transparent
         
@@ -96,6 +99,7 @@ class layer_fades (Layers):
 class layer_loading (Layers):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         
         from handler_gui_sizing import get_sizing
         sizing = get_sizing()
@@ -104,7 +108,7 @@ class layer_loading (Layers):
         self.background = handler_gui_elements.element_box_color(
             (20, 20, 20),  # Very dark gray
             (0, 0),
-            (sizing.window_width, sizing.window_height)
+            (sizing.cached_width, sizing.cached_height)
         )
         self.element_add(self.background)
         

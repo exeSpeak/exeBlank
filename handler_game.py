@@ -1,12 +1,16 @@
+# DO NOT ATTEMPT TO IMPORT main.py FROM OUTSIDE OF A FUNCTION OR YOU WILL GET A CIRCULAR IMPORT ISSUE
 import handler_gui_layers
 import handler_gui_panels
 import handler_gui_popups
+
+testing_coroutine_maximum = 6
 
 def alertUser (input_message):
     popup_alert.elements[0].text = input_message
     popTo("alert")
 
 def create_allLayers ():
+    global layer_main_menu, layer_game, layer_fades, layer_loading
     layer_main_menu = handler_gui_layers.layer_main_menu_root()
     layer_game = handler_gui_layers.layer_game()
     layer_fades = handler_gui_layers.layer_fades()
@@ -18,17 +22,18 @@ def create_allLayers ():
     layers.element_add(layer_fades)
     layers.element_add(layer_main_menu)
     layers.element_add(layer_loading)
-    layers.draw(window_handler.get_window())
+    layers.draw(thisWindow.get_window())
 
 def create_allPanels ():
     # Create panel instances
+    global panel_left, panel_right, panel_top, panel_bottom
     panel_left = handler_gui_panels.panel_sidebar_left()
     panel_right = handler_gui_panels.panel_sidebar_right()
     panel_top = handler_gui_panels.panel_toolbar_top()
     panel_bottom = handler_gui_panels.panel_status_bottom()
 
     # Initialize global panels group
-    global panels, panel_left, panel_right, panel_top, panel_bottom
+    global panels
     panels = handler_gui_panels.Panels(200)  # Default offset
     panels.element_add(panel_left)
     panels.element_add(panel_right)
@@ -36,9 +41,10 @@ def create_allPanels ():
     panels.element_add(panel_bottom)
     
     # Initial draw
-    panels.draw(window_handler.get_window())
+    panels.draw(thisWindow.get_window())
 
 def create_allPopups ():
+    global popup_alert, popup_gameover, popup_prompt
     # Create alert popup for general messages
     popup_alert = handler_gui_popups.popup_alert(
         "Alert",
@@ -58,14 +64,14 @@ def create_allPopups ():
     )
 
     # Initialize global popups group
-    global popups, popup_alert, popup_gameover, popup_prompt
-    popups = handler_gui_popups.Popups(window_handler.get_window())
-    popups.add_element(popup_alert)
-    popups.add_element(popup_gameover)
-    popups.add_element(popup_prompt)
+    global popups
+    popups = handler_gui_popups.Popups()
+    popups.element_add(popup_alert)
+    popups.element_add(popup_gameover)
+    popups.element_add(popup_prompt)
     
     # Initial draw
-    popups.draw(window_handler.get_window())
+    popups.draw(thisWindow.get_window())
 
 def create_allFolders ():
     import os
@@ -73,7 +79,13 @@ def create_allFolders ():
     for directory in temp_directoriesToCheck:
         if not os.path.exists(directory):
             os.makedirs(directory)
-        
+
+def create_application():
+    # ESTABLISH A REFERENCE TO THE WINDOW
+    global thisWindow
+    import handler_window
+    thisWindow = handler_window.WindowHandler("Title of Game as Seen in Window Title")
+
 def hideAll (input_which):
     match input_which:
         case "navTo":
@@ -124,13 +136,28 @@ def popTo (input_which):
         case "prompt":
             popup_prompt.show()
 
-def processButtonClick (input_buttonID):
-    match input_buttonID:
+def processActionByID (input_actionCode):
+    match input_actionCode:
         case "New Game":
+            print("processActionByID: New Game")
             navTo("game")
         case "Exit":
-            import main
-            main.exit()
+            print("processActionByID: Exit")
+            from main import exit
+            exit()
         case _:
-            alertUser ("Unknown button ID in proecessButtonClick:", input_buttonID)
+            alertUser ("Unknown action ID in proecessActionByID:", input_actionCode)
             navTo("mm") # WHEN IN DOUBT, RETURN TO MAIN MENU
+
+def update_coroutine_1sec ():
+    # THIS IS A TEST OF THE COROUTINE
+    # YOU CAN DELETE THE CURRENT CONTENTS BUT LEAVE THE FUNCTION
+    # YOU CAN ALSO DELETE THE VARIABLE "testing_coroutine_maximum" AT THE TOP OF THIS MODULE
+    # THIS TEST CLOSES THE WINDOW AFTER SIX SECONDS
+    global testing_coroutine_maximum
+    testing_coroutine_maximum -= 1
+    if testing_coroutine_maximum < 0:
+        import main
+        processActionByID("Exit")
+    print("testing coroutine_maximum = " + str(testing_coroutine_maximum))
+

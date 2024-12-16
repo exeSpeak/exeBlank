@@ -9,8 +9,8 @@ class Popups:
         
         # Get window dimensions from sizing handler
         sizing = get_sizing()
-        self.window_width = sizing.window_width
-        self.window_height = sizing.window_height
+        self.window_width = sizing.cached_width
+        self.window_height = sizing.cached_height
         
         # Calculate popup dimensions as percentage of window
         self.width = sizing.rel_width(width_percent)
@@ -48,6 +48,10 @@ class Popups:
         for element in self.elements:
             element.update_position(element.default_x, element.default_y)
     
+    def update_position (self, input_newX, input_newY):
+        self.x = input_newX
+        self.y = input_newY
+
     def draw (self, screen):
         # Draw darkened overlay
         screen.blit(self.overlay, (0, 0))
@@ -64,6 +68,7 @@ class popup_alert (Popups):
     def __init__(self, title, message):
         super().__init__ (width_percent=40, height_percent=30)
         self.background.fill((0,0,0))
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         self.element_add(handler_gui_elements.element_box_text(
             message,
             (self.x + 10, self.y + 10),
@@ -85,6 +90,7 @@ class popup_gameover (Popups):
     def __init__(self, title, reason):
         super().__init__ (width_percent=40, height_percent=30)
         self.background.fill((0,0,0))
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         self.element_add(handler_gui_elements.element_box_text(
             "Game Over",
             (self.x + 10, self.y + 10),
@@ -106,6 +112,7 @@ class popup_prompt (Popups):
     def __init__(self, title, inquiry):
         super().__init__ (width_percent=40, height_percent=30)
         self.background.fill((0,0,0))
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
         self.element_add(handler_gui_elements.element_box_text(
             inquiry,
             (self.x + 10, self.y + 10),

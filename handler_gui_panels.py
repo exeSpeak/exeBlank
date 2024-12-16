@@ -105,19 +105,33 @@ class Panels:
         self.y = self._calculate_y()
         self._update_element_positions()
 
+    def update_position(self, input_newX, input_newY):
+        self.x = input_newX
+        self.y = input_newY
+        self._update_element_positions()
+
 # PANEL OBJECTS
-class panel_sidebar_left(Panel):
+class panel_sidebar_left(Panels):
     def __init__(self):
-        super().__init__(200, "left")  # 200px wide, full height, left margin
+        super().__init__(200, margin="left")  # 200px wide, full height, left margin
+        self.elements = []
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
 
-class panel_sidebar_right(Panel):
+class panel_sidebar_right(Panels):
     def __init__(self):
-        super().__init__(200, "right")  # 200px wide, full height, right margin
+        super().__init__(200, margin="right")  # 200px wide, full height, right margin
+        self.elements = []
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
 
-class panel_toolbar_top(Panel):
+class panel_toolbar_top(Panels):
     def __init__(self):
-        super().__init__(50, "top")  # Full width, 50px height, top margin
-        
-class panel_status_bottom(Panel):
+        super().__init__(50, margin="top")  # Full width, 50px height, top margin
+        self.elements = []
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
+
+class panel_status_bottom(Panels):
     def __init__(self):
-        super().__init__(30, "bottom")  # Full width, 30px height, bottom margin
+        super().__init__(30, margin="bottom")  # Full width, 30px height, bottom margin
+        self.elements = []
+        self.image = pygame.image.load("default/tg.png").convert_alpha()  # Specify the correct path        
+

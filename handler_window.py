@@ -28,12 +28,14 @@ class WindowHandler:
     def clear_screen(self, color=(0, 0, 0)):
         self.window.fill(color)
 
+    def endProgram (self):
+        exit()
+
     def handle_events(self):
         """Handle window events including menu interactions"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                import main
-                main.exit()
+                self.endProgram()
             elif event.type == pygame.VIDEORESIZE:
                 self.resize(event.w, event.h)
                 handler_game.create_allLayers()  # Recreate layers with new dimensions

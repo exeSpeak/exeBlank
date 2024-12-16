@@ -1,6 +1,6 @@
 import handler_game
 
-def checkForError (inputType = "", inputSpecific = ""):
+def checkAndReportError (inputType = "", inputSpecific = ""):
 	temp_errorExplanation = "Requested error type", inputType, " given to checkForError does not exist"
 	match inputType:
 		case "InvalidInputType":

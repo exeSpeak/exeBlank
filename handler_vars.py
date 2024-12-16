@@ -6,17 +6,18 @@ vars_group_01 = ["01_first", "01_last"]
 vars_group_02 = ["02_first", "02_last"]
 vars_group_currency = ["gold", "ore"]
 vars_group_flags = ["isGameRunning", "isDialogVisible"]
+vars_group_achievements = ["wowrich", "wowstrong", "wowtank"]
 
 def combine_groups ():
     global vars_names
-    vars_names = vars_group_app + vars_group_01 + vars_group_02 + vars_group_currency + vars_group_flags
+    vars_names = vars_group_app + vars_group_01 + vars_group_02 + vars_group_currency + vars_group_flags + vars_group_achievements
 
 def setup_ints ():
     global vars_ints
     combine_groups()
     vars_ints = [0] * len(vars_names)
 
-def clear ():
+def clear_appStart ():
     setup_ints()
     vars_setMe("savegameloc", returnNextSaveFileID())
     # THIS IS WHERE YOU CAN MANUALLY SET THE DEFAULT VALUES AT THE START OF THE PROGRAM
