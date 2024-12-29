@@ -35,10 +35,8 @@ class element_button_text (UIElement):
         self.inactive_text_color = (204, 204, 204)  # #cccccc
         self.image = pygame.Surface(size)
         
-        script_dir = os.path.dirname(__file__)
-        font_path = os.path.join(script_dir, 'defaults/default_font_nunito.ttf')
-        self.font = handler_fonts.FontHandler().get_font('default', 16)
-        
+        self.font = handler_fonts.FontHandler().get_font('default')
+
         self.render()
         super().__init__(self.image, position[0], position[1])
 
@@ -132,11 +130,7 @@ class element_text_title (UIElement):
         self.x = position[0]
         self.y = position[1]
         self.color = (255, 255, 0)  # Yellow color
-        self.font_size = 24
-
-        script_dir = os.path.dirname(__file__)
-        font_path = os.path.join(script_dir, 'defaults/default_font_nunito.ttf')
-        self.font = handler_fonts.FontHandler().get_font('default', self.font_size)
+        self.font = handler_fonts.FontHandler().get_font('trajan48')
 
     def draw(self, screen):
         text_surface = self.font.render(self.text, True, self.color)
@@ -174,7 +168,7 @@ class element_box_text (UIElement):
         self.image = pygame.Surface(size)
         self.image.fill(bg_color)
 
-        self.font = handler_fonts.FontHandler().get_font('default', self.font_size)
+        self.font = handler_fonts.FontHandler().get_font('verdana16')
 
         self.render()
         super().__init__(self.image, position[0], position[1])
@@ -226,7 +220,7 @@ class element_slider (UIElement):
         pygame.draw.rect(self.image, (0, 0, 0), (thumb_x, thumb_y, thumb_width, thumb_height))
         pygame.draw.circle(self.image, (0, 255, 0), (thumb_x + thumb_width // 2, thumb_y + thumb_height // 2), thumb_width // 2)
 
-        text_surface = handler_fonts.FontHandler().get_font('default', 20).render(str(self.value), True, (0, 0, 0))
+        text_surface = self.font.render(str(self.value), True, (0, 0, 0))
         self.image.blit(text_surface, (self.rect.left + self.rect.width // 2 - text_surface.get_width() // 2, self.rect.top - text_surface.get_height() // 2))
 
         self.rect.topleft = (x, y)
@@ -264,7 +258,7 @@ class element_viewport (UIElement):
         pygame.draw.rect(surface, (0, 0, 0), (thumb_x, thumb_y, thumb_width, thumb_height))
         pygame.draw.circle(surface, (0, 255, 0), (thumb_x + thumb_width // 2, thumb_y + thumb_height // 2), thumb_width // 2)
 
-        text_surface = handler_fonts.FontHandler().get_font('default', 20).render(str(self.scroll_x), True, (0, 0, 0))
+        text_surface = self.font.render(str(self.scroll_x), True, (0, 0, 0))
         surface.blit(text_surface, (self.rect.left + self.rect.width // 2 - text_surface.get_width() // 2, self.rect.top - text_surface.get_height() // 2))
 
         self.rect.topleft = (x, y)
@@ -279,7 +273,7 @@ class element_input_field (UIElement):
 
     def draw(self, surface):
         pygame.draw.rect(surface, (0, 0, 0), self.rect, 2)
-        text_surface = handler_fonts.FontHandler().get_font('default', 20).render(self.text, True, (0, 0, 0))
+        text_surface = self.font.render(self.text, True, (0, 0, 0))
         surface.blit(text_surface, (self.rect.left + 5, self.rect.top + 5))
 
         self.rect.topleft = (x, y)
